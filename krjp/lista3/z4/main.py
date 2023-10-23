@@ -39,7 +39,7 @@ NUM_DICT = {
 }
 
 
-def convert_string_into_int(str_num: str) -> int:
+def convert_string_into_int(str_num):
     if "tysiące" in str_num or "tysięcy" in str_num:
         if "tysiące" in str_num:
             thousands_parts = str_num.split("tysiące", 1)
@@ -47,7 +47,9 @@ def convert_string_into_int(str_num: str) -> int:
             thousands_parts = str_num.split("tysięcy", 1)
         thousands = thousands_parts[0].strip()
         hundreds = thousands_parts[1].strip()
-        return convert_string_into_int(thousands) * 1000 + convert_string_into_int(hundreds)
+        return convert_string_into_int(thousands) * 1000 + convert_string_into_int(
+            hundreds
+        )
 
     parts = str_num.split(" ", 1)
 
@@ -59,7 +61,7 @@ def convert_string_into_int(str_num: str) -> int:
         return 0
 
 
-def sort_list(list_to_sort: list) -> list:
+def sort_list(list_to_sort):
     return sorted(list_to_sort, key=convert_string_into_int)
 
 

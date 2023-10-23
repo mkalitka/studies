@@ -1,4 +1,4 @@
-def max_sublist_sum(lista: list):
+def max_sublist_sum(lista):
     max_sum = 0
     max_i = 0
     max_j = 0
@@ -12,6 +12,7 @@ def max_sublist_sum(lista: list):
     return (max_i, max_j)
 
 
-print(max_sublist_sum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
-print(max_sublist_sum([1, -2, 3, 4, 5, -6, 7, 8, 9, 10]))
-print(max_sublist_sum([1, -2, 3, 4, 5, -6, 7, 8, 9, -10]))
+if __name__ == "__main__":
+    print(max_sublist_sum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_sublist_sum([1, -2, 3, 4, 5, -6, 7, 8, 9, 10]))
+    print(max_sublist_sum([1, -2, 3, 4, 5, -6, 7, 8, 9, -10]))
