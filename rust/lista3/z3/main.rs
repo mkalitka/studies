@@ -15,9 +15,10 @@ impl Cipher {
         let mut result = String::new();
         for c in string.chars() {
             let index = self.map1.find(c);
-            match index {
-                Some(i) => result.push(self.map2.chars().nth(i).unwrap()),
-                None => result.push(c),
+            if index.is_none() {
+                result.push(c);
+            } else {
+                result.push(self.map2.chars().nth(index.unwrap()).unwrap());
             }
         }
         result
@@ -27,9 +28,10 @@ impl Cipher {
         let mut result = String::new();
         for c in string.chars() {
             let index = self.map2.find(c);
-            match index {
-                Some(i) => result.push(self.map1.chars().nth(i).unwrap()),
-                None => result.push(c),
+            if index.is_none() {
+                result.push(c);
+            } else {
+                result.push(self.map1.chars().nth(index.unwrap()).unwrap());
             }
         }
         result

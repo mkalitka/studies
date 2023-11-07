@@ -1,6 +1,6 @@
 fn get_count(string: &str) -> usize {
     let mut vowels_count: usize = 0;
-    let vowels: Vec<char> = vec!['a', 'e', 'i', 'o', 'u'];
+    let vowels: String = String::new("aeiou");
     for c in string.chars() {
         if vowels.contains(&c) {
             vowels_count += 1;

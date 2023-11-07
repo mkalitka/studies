@@ -1,12 +1,8 @@
 fn gimme_the_letters(sp: &str) -> String {
-    let mut result = String::new();
     let mut chars = sp.chars();
     let start = chars.next().unwrap();
     let end = chars.last().unwrap();
-    for c in start..=end {
-        result.push(c);
-    }
-    result
+    (start..=end).collect().to_string()
 }
 
 #[cfg(test)]

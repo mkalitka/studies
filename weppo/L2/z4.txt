@@ -1,0 +1,2 @@
+typeof jest używany do określania podstawowych typów 
+podczas gdy instanceof jest używane do określania konkrentnej klasy 
