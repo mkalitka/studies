@@ -1,4 +1,4 @@
 https://example.com
 https://wikipedia.com
 https://www.randomnumberapi.com/api/v1.0/random
-https://bledna.strona
+https://www.timeanddate.com/worldclock/poland
