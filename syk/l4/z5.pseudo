@@ -1,0 +1,57 @@
+[x := 0]^1              
+[y := 1]^2             
+[i := 1]^3              
+while ([i < z]^4) {
+    [t := x+y]^5        
+    [x := y]^6          
+    [y := t]^7          
+    [i := i+1]^8        
+}
+[y := x]^9              
+
+
+// ◦ - entry, • - exit, jak wcześniej
+LV◦(1) = LV•(1)\{x}
+LV◦(2) = LV•(2)\{y}
+LV◦(3) = LV•(3)\{i}
+LV◦(4) = LV•(4) U {i, z}
+LV◦(5) = LV•(5)\{t} U {x, y}
+LV◦(6) = LV•(6)\{x} U {y}
+LV◦(7) = LV•(7)\{y} U {t}
+LV◦(8) = LV•(8)\{i} U {i}
+LV◦(9) = LV•(9)\{y} U {x}
+
+
+LV•(1) = LV◦(2)
+LV•(2) = LV◦(3)
+LV•(3) = LV◦(4)
+LV•(4) = LV◦(5)
+LV•(5) = LV◦(6)
+LV•(6) = LV◦(7)
+LV•(7) = LV◦(8)
+LV•(8) = LV◦(9)
+LV•(9) = ∅
+
+// Rozwiązanie
+
+LV•(9) = ∅
+LV◦(9) = LV•(9)\{y} U {x}       = {x}
+LV•(8) = LV◦(9)                 = {x}
+LV◦(8) = LV•(8)\{i} U {i}       = {x, i}
+LV•(7) = LV◦(8)                 = {x, i}
+LV◦(7) = LV•(7)\{y} U {t}       = {x, i, t}
+LV•(6) = LV◦(7)                 = {x, i, t}
+LV◦(6) = LV•(6)\{x} U {y}       = {i, t, y}
+LV•(5) = LV◦(6)                 = {i, t, y}
+LV◦(5) = LV•(5)\{t} U {x, y}    = {i, y, x}
+LV•(4) = LV◦(5)                 = {i, y, x}
+LV◦(4) = LV•(4) U {i, z}        = {i, y, x, z}
+LV•(3) = LV◦(4)                 = {i, y, x, z}
+LV◦(3) = LV•(3)\{i}             = {y, x, z}
+LV•(2) = LV◦(3)                 = {y, x, z}
+LV◦(2) = LV•(2)\{y}             = {x, z}
+LV•(1) = LV◦(2)                 = {x, z}
+LV◦(1) = LV•(1)\{x}             = {z}
+
+
+

@@ -1,0 +1,92 @@
+// Idea: szukamy najmniejszego punktu stałego 
+// 18 zbiorów RD•(1), RD•(2), .., RD◦(9) par (zmienna, nr_instrukcji)
+// 18 równań RD_j = F_j( RD•(1), RD•(2), .., RD◦(9))
+
+RD•(1) = RD◦(1) \ {(x, l) | l ∈ Lab} U {(x, 1)}
+RD•(2) = RD◦(2) \ {(y, l) | l ∈ Lab} U {(y, 2)}
+RD•(3) = RD◦(3) \ {(i, l) | l ∈ Lab} U {(i, 3)}
+RD•(4) = RD◦(4)
+RD•(5) = RD◦(5) \ {(t, l) | l ∈ Lab} U {(t, 5)}
+RD•(6) = RD◦(6) \ {(x, l) | l ∈ Lab} U {(x, 6)}
+RD•(7) = RD◦(7) \ {(y, l) | l ∈ Lab} U {(y, 7)}
+RD•(8) = RD◦(8) \ {(i, l) | l ∈ Lab} U {(i, 8)}
+RD•(9) = RD◦(9) \ {(y, l) | l ∈ Lab} U {(y, 9)}
+
+RD◦(1) = {(x, ?), (y, ?), (i, ?), (z, ?), (t, ?)} 
+RD◦(2) = RD•(1)
+RD◦(3) = RD•(2)
+RD◦(4) = RD•(3) U RD•(8)
+RD◦(5) = RD•(4)  
+RD◦(6) = RD•(5)  
+RD◦(7) = RD•(6)  
+RD◦(8) = RD•(7)  
+RD◦(9) = RD•(4)  
+
+// Kroki algorytmu: zaczynamy od tego, co znamy
+0: RD•(1)◦(1) = ∅, ... RD◦(9) = ∅
+1: RD◦(1) = {(x, ?), (y, ?), (i, ?), (z, ?), (t, ?)} 
+2: RD•(1) = RD◦(1) \ {(x, l) | l ∈ Lab} U {(x, 1)}      = {(x, 1), (y, ?), (i, ?), (z, ?), (t, ?)} 
+3: RD◦(2) = RD•(1)                                      = {(x, 1), (y, ?), (i, ?), (z, ?), (t, ?)} 
+4: RD•(2) = RD◦(2) \ {(y, l) | l ∈ Lab} U {(y, 2)}      = {(x, 1), (y, 2), (i, ?), (z, ?), (t, ?)} 
+5: RD◦(3) = RD•(2)                                      = {(x, 1), (y, 2), (i, ?), (z, ?), (t, ?)} 
+6: RD•(3) = RD◦(3) \ {(i, l) | l ∈ Lab} U {(i, 3)}      = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?)}
+// tu się dzieje ciekawa rzecz, bo póki co RD•(8)=∅
+7: RD◦(4) = RD•(3) U RD•(8)                             = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?)}
+8: RD•(4) = RD◦(4)                                      = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?)}
+9: RD◦(5) = RD•(4)                                      = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?)}
+10: RD•(5) = RD◦(5) \ {(t, l) | l ∈ Lab} U {(t, 5)}     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, 5)}
+11: RD◦(6) = RD•(5)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, 5)}
+12: RD•(6) = RD◦(6) \ {(x, l) | l ∈ Lab} U {(x, 6)}     = {(x, 6), (y, 2), (i, 3), (z, ?), (t, 5)}
+13: RD◦(7) = RD•(6)                                     = {(x, 6), (y, 2), (i, 3), (z, ?), (t, 5)}
+14: RD•(7) = RD◦(7) \ {(y, l) | l ∈ Lab} U {(y, 7)}     = {(x, 6), (y, 7), (i, 3), (z, ?), (t, 5)}
+15: RD◦(8) = RD•(7)                                     = {(x, 6), (y, 7), (i, 3), (z, ?), (t, 5)}
+16: RD•(8) = RD◦(8) \ {(i, l) | l ∈ Lab} U {(i, 8)}     = {(x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+// możemy teraz wrócić do RD◦(4), bo tam teraz nie mamy poprawnej wartości, bo RD•(8), od którego jest zależne, się zmieniło
+17: RD◦(4) = RD•(3) U RD•(8)                            = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+// teraz musimy poprawić kolejne wartości
+18: RD•(4) = RD◦(4)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+19: RD◦(5) = RD•(4)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+20: RD•(5) = RD◦(5) \ {(t, l) | l ∈ Lab} U {(t, 5)}     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+21: RD◦(6) = RD•(5)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+22: RD•(6) = RD◦(6) \ {(x, l) | l ∈ Lab} U {(x, 6)}     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+23: RD◦(7) = RD•(6)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+24: RD•(7) = RD◦(7) \ {(y, l) | l ∈ Lab} U {(y, 7)}     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+25: RD◦(8) = RD•(7)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+26: RD•(8) = RD◦(8) \ {(i, l) | l ∈ Lab} U {(i, 8)}     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+27: RD◦(9) = RD•(4)                                     = {(x, 1), (y, 2), (i, 3), (z, ?), (t, ?), (x, 6), (y, 2), (i, 8), (z, ?), (t, 5)}
+28: RD•(9) = RD◦(9) \ {(y, l) | l ∈ Lab} U {(y, 9)}     = {(x, 1), (i, 3), (z, ?), (t, ?), (x, 6), (i, 8), (z, ?), (t, 5), (y, 9)}
+
+// Kroki algorytmu: zaczynamy od tego, co znamy
+0: RD•(1)◦(1) = ∅, ... RD◦(9) = ∅
+1: RD◦(1) = {x?, y?, i?, z?, t?} 
+2: RD•(1) = RD◦(1) \ {(x, l) | l ∈ Lab} U {(x, 1)}      = {x1, y?, i?, z?, t?} 
+3: RD◦(2) = RD•(1)                                      = {x1, y?, i?, z?, t?}  
+4: RD•(2) = RD◦(2) \ {(y, l) | l ∈ Lab} U {(y, 2)}      = {x1, y2, i?, z?, t?} 
+5: RD◦(3) = RD•(2)                                      = {x1, y2, i?, z?, t?}  
+6: RD•(3) = RD◦(3) \ {(i, l) | l ∈ Lab} U {(i, 3)}      = {x1, y2, i3, z?, t?} 
+// tu się dzieje ciekawa rzecz, bo póki co RD•(8)=∅
+7: RD◦(4) = RD•(3) U RD•(8)                             = {x1, y2, i3, z?, t?} 
+8: RD•(4) = RD◦(4)                                      = {x1, y2, i3, z?, t?} 
+9: RD◦(5) = RD•(4)                                      = {x1, y2, i3, z?, t?} 
+10: RD•(5) = RD◦(5) \ {(t, l) | l ∈ Lab} U {(t, 5)}     = {x1, y2, i3, z?, t5} 
+11: RD◦(6) = RD•(5)                                     = {x1, y2, i3, z?, t5} 
+12: RD•(6) = RD◦(6) \ {(x, l) | l ∈ Lab} U {(x, 6)}     = {x6, y2, i3, z?, t5} 
+13: RD◦(7) = RD•(6)                                     = {x6, y2, i3, z?, t5} 
+14: RD•(7) = RD◦(7) \ {(y, l) | l ∈ Lab} U {(y, 7)}     = {x6, y7, i3, z?, t5} 
+15: RD◦(8) = RD•(7)                                     = {x6, y7, i3, z?, t5} 
+16: RD•(8) = RD◦(8) \ {(i, l) | l ∈ Lab} U {(i, 8)}     = {x6, y7, i8, z?, t5} 
+// możemy teraz wrócić do RD◦(4), bo tam teraz nie mamy poprawnej wartości, 
+// bo RD•(8), od którego jest zależne, się zmieniło
+17: RD◦(4) = RD•(3) U RD•(8)                            = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+// teraz musimy poprawić kolejne wartości
+18: RD•(4) = RD◦(4)                                     = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+19: RD◦(5) = RD•(4)                                     = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+20: RD•(5) = RD◦(5) \ {(t, l) | l ∈ Lab} U {(t, 5)}     = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+21: RD◦(6) = RD•(5)                                     = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+22: RD•(6) = RD◦(6) \ {(x, l) | l ∈ Lab} U {(x, 6)}     = {y2, i3, z?, t?, x6, y7, i8, t5}
+23: RD◦(7) = RD•(6)                                     = {y2, i3, z?, t?, x6, y7, i8, t5}
+24: RD•(7) = RD◦(7) \ {(y, l) | l ∈ Lab} U {(y, 7)}     = {i3, z?, t?, x6, y7, i8, t5}
+25: RD◦(8) = RD•(7)                                     = {i3, z?, t?, x6, y7, i8, t5}
+26: RD•(8) = RD◦(8) \ {(i, l) | l ∈ Lab} U {(i, 8)}     = {z?, t?, x6, y7, i8, t5}
+27: RD◦(9) = RD•(4)                                     = {x1, y2, i3, z?, t?, x6, y7, i8, t5}
+28: RD•(9) = RD◦(9) \ {(y, l) | l ∈ Lab} U {(y, 9)}     = {x1, i3, z?, t?, x6, i8, t5, y9}
