@@ -1,0 +1,17 @@
+fib[] = tablica liczb fibonacciego      
+i = indeks maksymalnej liczby fib
+res = []
+for i in i..1:          // krok i o -2
+    if fib[i] <= C:
+        C = C - fib[i]
+        res.append(fib[i])
+return res
+
+
+Dowód:
+Indukcyjnie.
+
+Podstawa: n = 1, F0 = 1, n = F0
+
+Krok: Załóżmy, że dla wszystich 0 < i < n + 1 i może być zapisane jako suma różnych liczb fib
+Niech Fj < n + 1 < Fj+1, wtedy 0 < n + 1 - Fj < n + 1, więc (n + 1 - Fj) można zapisać jako sumę różnych liczb fib, więc n + 1 = (n + 1 - Fj) + Fj też można.

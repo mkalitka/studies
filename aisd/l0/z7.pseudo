@@ -1,0 +1,8 @@
+res = 0
+for i in range(0, A, 2):
+    res += A[i]
+    res -= A[i-1]
+return res mod 2
+
+(a-b) mod 2 = (b-a) mod 2
+Czyli kolejność nie ma znaczenia

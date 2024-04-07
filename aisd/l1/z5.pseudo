@@ -1,0 +1,28 @@
+func printPath(vertice v) {
+    if v.second == null {
+        print(v);
+    } else {
+        print(printPath(v.second) + " " + v);
+    }
+}
+
+function maxLength(graph G) {
+    sortedArray = topoSort(G);
+    P = [[0, 0]] * n
+    for v in sortedArray {
+        for u in G[v] {
+            if P[u].first < P[v].first + 1 {
+                P[u].second = P[v];
+                P[u].first = P[u].first + 1;
+            }
+        }
+    }
+
+    maxPath = max([i.first for i in P]);
+    printPath(maxPath);
+}
+
+Złożoność: O(V + E)
+
+Idea:
+- Sortujemy tablicę wierzchołków topologicznie, następnie dla każdego wierzchołka przypisujemy długość drogi taką, jaką ma, lub długość drogi jego ojca + 1

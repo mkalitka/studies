@@ -1,0 +1,24 @@
+m = -inf
+r = inf
+ind = [1] * k
+PQ = PriorityQueue()
+
+// znajdujemy maksimum wszystkich list
+for i in range(k):
+    PQ.push(L[i][0], i);
+    m = max(m, L[i][0]);
+
+// dopóki nie przejdzimey każdej listy
+while !PQ.empty() { 
+    a, i = PQ.pop();
+    r = min(m - a, r);
+    // jeśli jeszcze nie przeszliśmy każdego elementu w liście
+    if ind[i] < len(L[i]) {
+        x = L[i][ind[i]];
+        ind[i]++;
+        m = max(m, r);
+        PQ.push(x, i);
+    }
+}
+
+Złożoność: O(nlog(k))

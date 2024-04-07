@@ -1,0 +1,16 @@
+func count_vertices(bintree t) {
+    if t == None return 0;
+    return count_vertexes(t.left) + count_vertexes(t.right) + 1;
+}
+
+func height(bintree t) {
+    if t == None return 0;
+    return max(height(t.left), height(t.right)) + 1;
+}
+
+func max_distance(bintree t) {
+    return max(height(t.left) + height(t.right), max_distance(t.left), max_distance(t.right));
+}
+
+Złożoność 1a: O(n)
+Złożoność 1b: O(n^2)

@@ -1,0 +1,15 @@
+Dane: L - lista par wierzchołków, T - drzewo w liście par krawędzi
+
+def is_in_path(u, v):
+    if v == root:
+        return False
+    if v == u:
+        return True
+    for t in T:
+        if t.second == v:
+            is_in_path(u, t.first)
+
+for l in L:
+    print(is_in_path(l.first, l.second))
+
+Złożoność: O(nH)

@@ -1,0 +1,33 @@
+Problem pokrycia zbiorów:
+    Dane: Rodzina S podzbiorów n-elementowego uniwersum U
+          funkcja kosztu c: S -> R+
+    Zadanie: Znaleźć najtańszą podrodzinę S pokrywającą U, tzn.
+             znaleźć S' (podrodzina S) taką, że suma wszystkich jej elementów jest równa U.
+             i żadna inna podrodzina nie ma kosztu mniejszego od Koszt(S'),
+             gdzie Koszt(Z) = dla każdego z należące do Z suma c(z)
+
+U = {a1, a2, ..., an}
+S = {U, {a1}, ..., {an}}
+c = S -> R+, c(Si) = 1/i (i = 1, ..., n + 1)
+Strategia wyboru podzbioru, który najtaniej pokrywa elementy.
+
+Algorytm wykona kroki:
+k = 0
+cne(U) = 1/n
+cne({a1}) = 1/2
+.
+.
+cne({an}) = 1/(n+1)     // Wybieramy
+
+k = 1
+cne(U) = 1/(n-1)
+cne({a1}) = 1/2         // Koszty singletonów się nie zmieniają
+.
+.
+cne({an-1}) = 1/n       // Wybieramy
+itd.
+
+Algorytm nie wybierze U
+Zapłaci sumę (1/2 ... 1/(n+1)), a opt to 1 = U
+
+O(log n) = całka od 0 do n+1 (1/x dx) <= suma (1/2 ... 1/(n+1))

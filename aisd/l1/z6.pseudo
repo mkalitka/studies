@@ -1,0 +1,25 @@
+func z6(a[], n) {
+    res = 0;
+    l = 0;
+    r = ceil(n / 2);
+    while left < ceil(n / 2) && right < n {
+        if 2 * a[l] <= a[r] {
+            res += 2;
+            left++;
+        }
+        right++;
+    }
+    return res;
+}
+
+Złożoność: O(n)
+
+Idea:
+- Dzielimy tablicę na 2 części: L i R. Przechodzimy obydwie tablice, zwiększamy wskaźnik L wtedy, gdy warunek z zadania zachodzi, a R za każdym razem. Gdy warunek zachodzi, zwiększamy ilość liczb, które możemy usunąć o 2.
+
+Dowód:
+- Weźmy rozwiązanie i załóżmy, że jest ono większę o parę <a, b>, która nie została wykreślona, gdzie 2a <= b, wtedy:
+- Jeśli a, b należy do L to w P znajdują się same liczby >= b, czyli >= 2a, czyli a zostało wykreślone
+- Jeśli a, b należy do R to w L znajdują się same liczby które są <= b/2, czyli b zostało wykreślone
+- Jeśli a należy do L a b należy do R to algorytm je wykreśli podczas działania, ponieważ jeśli dojdzie do liczby a, to będzie szukał do tej liczby pary, która istnieje i jest nią b.
+- Dochodzimy do sprzeczności, zatem algorytm działa

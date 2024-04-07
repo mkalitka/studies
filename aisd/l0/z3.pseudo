@@ -1,0 +1,26 @@
+Mnożenie po rosyjsku:
+
+1. oblicz ciąg a1, a2, ..., ak taki, że a1 = a, ak = 1, a(i+1) = floor(ai/2)
+2. oblicz ciąg b1, b2, ..., bk taki, że b1 = b, b(i+1) = 2bi
+(dla i = 1..k-1)
+3. oblicz sumę bi i ai o nieparzystych indeksach
+
+Dowód:
+suma od i=0 do log2a ((floor(a/2^i) mod 2) * b * 2^i)
+wyciągnijmy b przed sumę
+b * suma od i=0 do log2a ((floor(a/2^i) mod 2) * 2^i)
+zauważmy, że ta suma jest równa a
+zatem wynikiem jest b * a
+
+Złożoność kryterium jednokrotne:
+czasowa: log(a)
+pamięciowa: 4, bo a, b, wynik, modulo
+
+Złożoność kryterium logarytmiczne:
+czasowa: suma od i do log a ((i+2 + (log(b) + i + 2) + 2(log(b) + i) + (2 + (i + 2) + i + (i + 2) + 1))
+         * a          * b             sum wynik              modulo (/, *, -, if)
+pamięciowa: log(a) + (log(a) + log(b)) + log(ab) + 1 = 3log(a) + 2log(b) + 1
+log(a) to a
+log(a) + log(b) suma
+log(a*b) wynik
+1 modulo

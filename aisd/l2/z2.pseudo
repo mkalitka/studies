@@ -1,0 +1,10 @@
+Dane: I - odcinki, n - ilość odcinków
+
+I = sorted(I)       // sortujemy malejąco po 2 współrzędnej, potem po 1
+last_ending = -inf
+res = []
+for i in I:
+    if i.first > last_ending:
+        res.append(i)
+        last_ending = i.second
+return res

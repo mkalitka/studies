@@ -1,0 +1,25 @@
+func sensowne_drogi(G, u, v) {
+    D = djikstra(G, v);
+    visited = [false] * n;
+    pathcount = [0] * n;
+    pathcount[v] = 1;
+    visited[v] = true;
+
+    func sensiblePathCount(u) {
+        for x in G[u] {
+            if !visited[x] {
+                sensiblePathCount(x);
+            }
+            pathcount[u] = pathcount[u] + pathcount[x];
+        }
+        visited[u] = true;
+    }
+}
+
+Złożoność: O(VlogV + E)
+- Djisktra ma złożoność O(VlogV + E)
+- Każdy wierzchołek zostaje odwiedzony dokładnie raz
+
+Idea:
+- u = v Ilość sensownych ścieżek = 1
+- u != v Wtedy u na pewno ma sąsiada który leży bliżej v. Wtedy ilość sensownych dróg u do v to suma sensownych dróg dla sąsiadów którzy leżą bliżej v.

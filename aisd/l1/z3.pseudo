@@ -1,0 +1,36 @@
+func topo_sort(graf G) {
+    deg = [];
+    PQ = PriorityQueue();
+
+    for x in G {
+        for y in G[x] {
+            deg[y] += 1;
+        }
+    }
+
+    for x in G {
+        if deg[x] == 0 {
+            PQ.push(x)
+        }
+    }
+
+    while !PQ.empty() {
+        min = PQ.pop();
+        print(min);
+        for x in G[min] {
+            deg[x]--;
+            if deg[x] == 0 {
+                PQ.push(x);
+            }
+        }
+    }
+}
+
+Złożoność: O(Vlog(V) + E)
+
+Idea:
+- Topological sort przy pomocy kolejki
+- Porządek leksykograficzny zachowamy dzięki użyciu min-heapa (kolejka priorytetowa a minimalny leksykograficznie wierzchołek w korzeniu)
+
+Dowód poprawności:
+- Toposort działa. Algorytm robi to samo ale ustawia w kolejce porządek leksykograficzny.

@@ -1,0 +1,3 @@
+Pierwsza pętla: n razy
+druga pętla: łącznie z pierwszą pętlą wykona się n razy, ponieważ jeśli j jest podzielne przez 2, to wykona się raz, potem jeśli j jest podzielne przez 4 to 2 razy itd.. sumuje się to do n.
+Złożoność: O(n)
