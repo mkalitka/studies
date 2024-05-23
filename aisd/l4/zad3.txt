@@ -1,0 +1,109 @@
+// IDEA: 
+// dp[x][y] = długość minimalnego superciągu dla wyrazów X[0..x] i Y[0..y] (czyli ciągów z uciętymi końcówkami)
+
+
+Problem jest dość analogiczny do tego z notatek. Redukujemy problem przez następujące obserwacje:
+1. Ostatnia litera X i Y są takie same - oznacza to, że ta litera musimy być ostatnią literą superciągu
+2. Ostatnie litery X i Y się różnią - oznacza to, że (w danym kroku) jedna z ostatnich liter X lub Y zostanie dodana do końca superciągu (dodanie 1 do wyniku),
+a ze słów które powstaną po usunięciu jej spróbujemy utworzyć nowy najkrótszy superciąg
+
+Rozpisanie drugiego kroku:
+Załóżmy, że mamy
+X = "AB"
+Y = "ABC"
+
+Widzimy, że ostatnie litery X i Y się różnią. Zatem rozpatrujemy dwa podprzypadki: 
+1) X' = "A" Y' = "ABC" // usuwasz B z X i dodajesz je do wyniku <- a to sobie zostawie XD
+superciąg wynikowy = superciag(X', Y') + "B" = "ABC" + "B" = "ABCB"
+
+2) 'X = "AB" 'Y = "AB"
+superciąg wynikowy = superciag(X', Y') + "C" = "AB" + "C" = "ABC"
+
+Szukamy najkrótszego superciągu więc bierzemy ten z 2).
++1 w obliczaniu wyniku bierze się z "B" w 1) i z "C" z 2)
+
+
+
+Stąd widzimy, że algorytm działa w następujący sposób:
+1) Basecase - X lub Y są puste, czyli ochodzi nas długość niepustego slowa (dwa pierwsze ify)
+2) X i Y nie są puste:
+    2.1) X[-1] == Y[-1]: ostatni element superciagu jest taki sam, wynik: ss(X[::-1], Y[::-1]) + 1
+    2.2) X[-1] != Y[-1]: bierzemy min(ss(X[::-1], Y), ss(X, Y[::-1])) + 1
+
+
+Ale ten algorytm na razie daje nam tylko długość tego superciągu. 
+Teraz będziemy chcieli odbudować ten ciąg w oparciu o wynik.
+
+Zbudowaliśmy tablice w taki sposób, że w każdym polu (czyli dla każdej długości słow X i Y) uzyskaliśmy najkrótszą długość
+danego superciągu.
+Znamy również kryterium, ktorego użyliśmy do konstrukcji tej tablicy.
+Teraz bazując na wyniku z pola dp[m][n] (chyba, chodzi po prostu o ten róg z wynikiem) jesteśmy w stanie odbudować dane słowo
+kierując się danymi zasadami:
+1. Jeżeli X[-1] == Y[-1]: result = X[-1] + result (dodajemy X[-1] na początek, bo tablice budujemy od tyłu)
+2. Wpp liczymy dp(X[::-1], Y) oraz dp(X, Y[::-1]) i wybieramy mniejszy z nich
+
+Jeżeli jakieś słowo się skończyło, to bierzemy to co pozostało z drugiego i doklejamy do ciągu. Robimy tak ze względu na to, że 
+ta reszta Y (załóżmy że X jest puste) nie jest zależne od X i po prostu musi być zawarte w superciągu. 
+
+I to jest cały algorytm. Pseudokod był do wyjebania więc zostawiam sam działający kod w pythonie:
+
+def superSeq(X, Y, m, n):
+    # CZESC PIERWSZA - ZNAJDOWANIE DLUGOSCI
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    // # Uzupełniamy tablicę
+    for i in range(m + 1):
+        for j in range(n + 1):
+            // # X jest puste, zapisujemy długość Y
+            if i == 0:
+                dp[i][j] = j
+
+            // # Y jest puste, zapisujemy długość X
+            elif j == 0:
+                dp[i][j] = i
+
+            // # X i Y kończą się tą samą literą
+            elif X[i - 1] == Y[j - 1]:
+                dp[i][j] = 1 + dp[i - 1][j - 1]
+
+            // # X i Y kończą się różnymi literami
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1])
+
+
+    // CZESC DRUGA - ODTWARZANIE SŁOWA
+    result = "" // zmienna wynikowa - superciag
+    i, j = m, n
+    while i > 0 and j > 0:
+        // # X i Y kończą się tą samą literą
+        if X[i - 1] == Y[j - 1]:
+            result = X[i - 1] + result
+            i -= 1
+            j -= 1
+        // # Bierzemy krótszy "podsuperciągów" xd
+        elif dp[i - 1][j] < dp[i][j - 1]:
+            result = X[i - 1] + result
+            i -= 1
+        else:
+            result = Y[j-1] + result
+            j-=1
+    
+    // # teraz zbieramy resztki tego co zostało 
+    while i > 0: // jebane nawiasy
+        result = X[i-1] + result
+        i -= 1
+    
+    while j > 0: // jebane nawiasy v2
+        result = Y[j-1] + result
+        j -= 1
+
+
+    return result
+
+    
+X = "AGGTAB"
+Y = "GXTXAYB"
+print(f"Shortest supersequence is {superSeq(X, Y, len(X), len(Y))}")
+  
+
+

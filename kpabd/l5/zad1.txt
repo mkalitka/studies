@@ -1,0 +1,82 @@
+1NF:
+In 1NF, we ensure that:
+- The table has no repeating groups.
+- Each field contains only atomic values (indivisible).
+Result:
+- Patient Table:
+  - PatientID (Primary Key)
+  - PatientName 
+  - PatientAddress
+
+- Appointment Table:
+  - AppointmentID (Primary key)
+  - PatientID (Foreign Key)
+  - Date
+  - Time
+  - Room
+  - Price
+  - Physician
+  - Specialty
+  - Cause
+
+2NF:
+To achieve 2NF:
+- The table must meet 1NF.
+- Non-prime attributes (attributes not part of a candidate key) must be fully functionally dependent on the primary key.
+Result:
+- Patient Table:
+  - PatientID (Primary Key)
+  - PatientName
+  - PatientAddress
+
+- Appointment Table:
+  - AppointmentID (Primary Key)
+  - PatientID (Foreign Key)
+  - PhysicianID (Foreign Key)
+  - CauseID (Foreign Key)
+  - Date
+  - Time
+  - Room
+  - Price
+
+- Physician Table:
+  - PhysicianID (Primary Key)
+  - PhysicianName
+  - Specialty
+
+- Cause Table:
+  - CauseID (Primary Key)
+  - Details
+
+
+3NF:
+To achieve 3NF:
+- The table must meet 2NF.
+- There should be no transitive dependencies (i.e., non-prime attributes should depend only on the primary key).
+- Patient Table:
+  - PatientID (Primary Key)
+  - PatientName
+  - PatientAddress
+
+- Appointment Table:
+  - AppointmentID (Primary Key)
+  - PatientID (Foreign Key)
+  - PhysicianID (Foreign Key)
+  - CauseID (Foreign Key)
+  - Date
+  - Time
+  - Room
+  - Price
+
+- Physician Table:
+  - PhysicianID (Primary Key)
+  - PhysicianName
+
+- Specialty Table:
+  - SpecialtyID (Primary Key)
+  - SpecialtyName
+
+- Cause Table:
+  - CauseID (Primary Key)
+  - SpecialtyID (Foreign Key)
+  - Details

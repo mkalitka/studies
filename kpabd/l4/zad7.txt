@@ -1,0 +1,39 @@
+Concurrency control ensures the consistency of data when multiple transactions access the database simultaneously.
+
+
+Pessimistic Concurrency Control prevents conflicts by locking resources before accessing them.
+
+Mechanism:
+  - When a transaction reads or modifies data, it places a lock on the data to prevent
+    other transactions from reading or writing to it.
+  - Locks can be shared (for reading) or exclusive (for writing).
+  - Transactions wait for locks to be released, ensuring strict control but
+    potentially causing blocking and deadlocks.
+
+Example: Two transactions attempt to update the same row.
+  - T1 begins and reads a row (places a shared lock).
+    Updates the row (upgrades to exclusive lock).
+  - T2 tries to read the same row but must wait for T1 to
+    release its exclusive lock.
+So, T2 is blocked until T1 completes, ensuring data consistency, but potentially causing delays.
+
+
+Optimistic Concurrency Control allows transactions to proceed without locking resources,
+assuming that conflicts are rare and checks for conflicts only before committing.
+
+Mechanism:
+  - Transactions read data without locking it.
+  - Before committing, the transaction checks if the data has changed.
+  - If the data has not changed, the transaction commits.
+  - If the data has changed, the transaction rolls back and retries.
+
+Example: Two transactions attempt to update the same row.
+  - T1 reads a row.
+    Then, T1 updates the row.
+  - T2 reads the same row.
+    T2 updates the row.
+  - Both T1 and T2 try to commit:
+    - T1 commits first
+    - T2 during its commit check, detects that row has changed since it read it.
+    - T2 is rolled back.
+Both transactions were able to proceed concurrently, but not all transactions will succeed due to conflicts.

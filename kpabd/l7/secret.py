@@ -1,0 +1,5 @@
+URI = "neo4j+s://ec13cdf7.databases.neo4j.io"
+USERNAME = "neo4j"
+PASSWORD = "Hs19rEUsjVR7gI4CAwJ7QOpwwu8pgvHRyHbcLNNSIU8"
+INSTANCE_ID = "ec13cdf7"
+INSTANCE_NAME = "Instance01"

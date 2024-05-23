@@ -1,0 +1,39 @@
+// https://hackmd.io/A7ckSXmLTQ6hqyGhsth5uw#ZAD-4
+// cel: scalenie 2 ciągów n-elementowych A i B
+"algorytm": scalenie ciągów z użyciem nie więcej niż 2n-1 porównań
+"adwersarz": zmuszenie algorytmu do wykonania 2n-1 porównań
+
+// ruchy
+"algorytm": pytanie o porównanie elementów z 2 ciągów
+"adwersarz": odpowiedz na to pytanie
+
+// algorytm
+Wykonuje merge znany z merge sortu.
+1.  jeśli pierwszy element z A jest mniejszy od pierwszego elementu z B to dodaje go do wyniku i przesuwa wskaźnik na A.
+2. wpw. dodaje pierwszy element z B i przesuwa wskaźnik na B.
+3. kiedy któryś z ciągów jest pusty, dodaje resztę elementów z drugiego ciągu.
+
+// strategia adwersarza
+Wybrać te ciągi tak, żeby 3. się wykonało dla ciagu 1-elementowego tzn. żeby dodać tylko 1 element bez porównywania.
+Dokładniej: możemy wybrać te ciągi tak, że elementy będą dodawać się na zmianę tzn. wynikiem bedzie ciag [a0, b0, a1, b1, a2, b2, ... , an, bn].
+
+// przebieg gry
+Algorytm nie zadaje durnych pytań, tzn. zawsze porównuje tylko ai z bj, gdzie i oraz j są aktualnymi wartościami wskaźników.
+(nie porównuje dwóch elementów z tego samego ciągu ani nie porównuje elementów, które już zostały dodane do wyniku).
+Porównuje zatem kolejno:
+1. a0 b0 -> wynik: [a0]
+2. a1 b0 -> wynik: [a0, b0]
+3. a1 b1 -> wynik: [a0, b0, a1]
+4. a2 b1 -> wynik: [a0, b0, a1, b1]
+...
+2n-1. an bn -> wynik: [a0, b0, a1, b1, ... , an]
++ dodanie bn na koniec, czyli wynik [a0, b0, a1, b1, ... , an, bn]
+itd, czyli wykona w sumie 2n-1 porównań.
+
+// uzasadnienie, że zawsze usuwamy co najwyżej jeden zestaw danych
+Rozważmy możliwe pytania, które może zadać algorytm dla par (ai, bj):
+1. i=j      -> ai<bj czyli usuwamy 1 element z A                np. (a0, b0)
+2. i+1=j    -> ai>bj czyli usuwamy 1 element z B                np. (a1, b0)
+3. i<j      -> nie są w tej samej parze, więc nic nie usuwamy   np. (a0, b1)
+4. i+1>j    -> nie są w tej samej parze, więc nic nie usuwamy   np. (a2, b0)
+

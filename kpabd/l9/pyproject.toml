@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "kpabd"
+version = "0.1.0"
+description = ""
+authors = ["mkalitka <mikolaj.kalitka@proton.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pymssql = "^2.3.2"
+pydantic = "^2.10.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

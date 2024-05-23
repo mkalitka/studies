@@ -1,0 +1,26 @@
+Lemat 1:
+W drzewach nie ma cykli, 
+więc istnieje tylko jedna ścieżka pomiędzy każdą parą wierchołków.
+
+dp[v] = odległość aktualnego wierzchołka od v
+
+def dfs(v):
+    for u in G[v]:
+        if dp[u] = -1:
+            dp[u] = dp[v] + c(u)
+            dfs(u)
+
+res = 0
+for v in G:
+    for u in G:
+        dp[u] = -1
+    dp[v] = 0
+    dfs(v, v)
+    for u in G:
+        if dp[u] == C:
+            res += 1
+
+return res / 2 # bo zliczamy przypadki u -> v oraz v -> u, a to jedna para
+
+Dowód:
+No widać
